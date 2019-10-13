@@ -22,14 +22,12 @@ namespace TezLiLi.APIHelpers
             {
                 //usually i make a standard request without authentication, eg: to the home page.
                 //by doing this request you store some initial cookie values, that might be used in the subsequent login request and checked by the server
-                var homePageResult = client.GetAsync("/");
-                homePageResult.Result.EnsureSuccessStatusCode();
-
+              
                 var content = new FormUrlEncodedContent(new[]
                 {
-             new KeyValuePair<string, string>("tool", tool),
-             new KeyValuePair<string, string>("input", input),
-             new KeyValuePair<string, string>("token", Token),
+                     new KeyValuePair<string, string>("tool", tool),
+                     new KeyValuePair<string, string>("input", input),
+                     new KeyValuePair<string, string>("token", Token),
                 });
                HttpResponseMessage httpResponse = client.PostAsync(BaseAddress, content).Result;
 

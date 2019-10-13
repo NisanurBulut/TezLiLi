@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TezPars", "TezLiLi\TezPars.csproj", "{6A0B6FC0-EE6F-44B4-A259-775E3B9D02F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikipediaApiCaller", "WikipediaApiCaller\WikipediaApiCaller.csproj", "{B901D7E4-2DBE-4C30-B1C4-577A27A1E781}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6A0B6FC0-EE6F-44B4-A259-775E3B9D02F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A0B6FC0-EE6F-44B4-A259-775E3B9D02F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A0B6FC0-EE6F-44B4-A259-775E3B9D02F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B901D7E4-2DBE-4C30-B1C4-577A27A1E781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B901D7E4-2DBE-4C30-B1C4-577A27A1E781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B901D7E4-2DBE-4C30-B1C4-577A27A1E781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B901D7E4-2DBE-4C30-B1C4-577A27A1E781}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

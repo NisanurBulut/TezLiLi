@@ -13,7 +13,11 @@ namespace TezLiLi.APIHelpers
             var Taskresult = ApiMainHelper.CallApi(input, "normalize");
             return Taskresult.Result;
         }
-
+        public static string NerCall(string input)
+        {
+            var Taskresult = ApiMainHelper.CallApi(input, "ner");
+            return Taskresult.Result;
+        }
         public static string MorphGenerator(string input)
         {
             var Taskresult = ApiMainHelper.CallApi(input, "morphgenerator");
@@ -37,6 +41,7 @@ namespace TezLiLi.APIHelpers
         public static string NoisyPipeline(string input)
         {
             var Taskresult = ApiMainHelper.CallApi(input, "pipelineNoisy");
+            Taskresult.Wait();
             return Taskresult.Result;
         }
     }

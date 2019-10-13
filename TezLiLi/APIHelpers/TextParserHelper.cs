@@ -38,18 +38,13 @@ namespace TezLiLi.APIHelpers
             this.Topic = _topic;
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-            this.FilePath = projectDirectory + @"\VeriSeti\Konular\";
-            this.SFilePath = projectDirectory + @"\VeriSetiSonuclar\KaynakVeriSeti3.txt";
-            this.RFilePath = projectDirectory + @"\VeriSetiSonuclar\SonucVeriSeti3.txt";
+            this.FilePath = projectDirectory + @"\VeriSeti\";
+            this.SFilePath = projectDirectory + @"\VeriSetiSonuclar\KaynakVeriSeti8_Her Gün Bıraz Hikaye Bir Masal.txt";
+            this.RFilePath = projectDirectory + @"\VeriSetiSonuclar\SonucVeriSeti8.txt";
         }
         public List<string> TopicList = new List<string>()
         {
-           
-            "meraltamer",
-            "samikohen",
-            "serpilyilmaz",
-            "tahaakyol",
-            "tuncayozkan"
+            "ebooks"
         };
         public void ReadText()
         {

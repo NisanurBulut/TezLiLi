@@ -1,4 +1,4 @@
-1 Araya derin ekonomik kriz girdi.
+﻿1 Araya derin ekonomik kriz girdi.
 
 
 
@@ -103,6 +103,7 @@
 
 
 20 Daralmadan çıkış bu kez, öncekilerden farklı bir süreç olacak.
+
 
 
 
