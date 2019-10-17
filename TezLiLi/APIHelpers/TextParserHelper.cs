@@ -29,18 +29,19 @@ namespace TezLiLi.APIHelpers
             this.FilePath = projectDirectory + @"\VeriSeti\Konular\";
             this.SFilePath = string.Empty;
         }
-        public TextParserHelper() { 
-            
+        public TextParserHelper()
+        {
+
         }
-        public void InitializeTextParserHelper(string _topic)  
+        public void InitializeTextParserHelper(string _topic)
         {
             this.TopicFileList.Clear();
             this.Topic = _topic;
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
             this.FilePath = projectDirectory + @"\VeriSeti\";
-            this.SFilePath = projectDirectory + @"\VeriSetiSonuclar\KaynakVeriSeti8_Her Gün Bıraz Hikaye Bir Masal.txt";
-            this.RFilePath = projectDirectory + @"\VeriSetiSonuclar\SonucVeriSeti8.txt";
+            this.SFilePath = projectDirectory + @"\VeriSetiSonuclar\";
+            this.RFilePath = projectDirectory + @"\VeriSetiSonuclar\";
         }
         public List<string> TopicList = new List<string>()
         {
@@ -54,13 +55,13 @@ namespace TezLiLi.APIHelpers
         }
         public void GetTopicFiles()
         {
-            
+
             //Verilen klasör içerisindeki dosyaların yolunu alır
             string fpath = this.FilePath + this.Topic;
             this.OrjFilePathList.Clear();
             this.TopicFileList.AddRange(Directory.GetFiles(fpath).ToList());
             this.ResultFilePathList.Clear();
-            foreach(var path in this.TopicFileList)
+            foreach (var path in this.TopicFileList)
             {
                 var p = path.IndexOf('.');
                 var pa = path.Substring(0, p);
@@ -84,62 +85,67 @@ namespace TezLiLi.APIHelpers
         {
             string[] sekme1 = Regex.Split(this.Content, @"(?<=[.!?])");
 
-          foreach(var cumle in sekme1)
+            foreach (var cumle in sekme1)
             {
-                
 
-                if (cumle.Length>30)
+
+                if (cumle.Length > 30)
                 {
                     string _cumle = cumle.Trim();
 
-                    string[] lines = _cumle.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                    var sline = string.Empty;
-                    foreach (var line in lines)
+
+
+
+                    _cumle = _cumle.Trim();
+                    if (_cumle.Contains("..."))
                     {
-                        sline = line.Trim();
-                        if (sline.Length > 10)
-                        {
-                            if (KontrolCumle(sline) == true)
-                            {
-                                this.SentenceList.Add(sline);
-                            }
-                        }
+                        _cumle = _cumle.Replace("...", ".");
                     }
-                   if(lines.Length==0 && _cumle.Length > 25)
+
+                    if (KontrolCumle(_cumle) == true)
                     {
-                            if (KontrolCumle(_cumle) == true)
-                            {
-                            if(cumle.Contains("...")==true)
-                            {
-                                var result = cumle.Replace("...", ".");
-                                this.SentenceList.Add(result);
-                            }
-                            else
-                            {
-                                this.SentenceList.Add(_cumle);
-                            }
-                               
-                            }
+                        this.SentenceList.Add(_cumle);
                     }
-                                   
+
+
+
+
+                    //if (lines.Length == 0 && _cumle.Length > 25)
+                    //{
+                    //    if (KontrolCumle(_cumle) == true)
+                    //    {
+                    //        if (cumle.Contains("...") == true)
+                    //        {
+                    //            var result = cumle.Replace("...", ".");
+                    //            this.SentenceList.Add(result);
+                    //        }
+                    //        else
+                    //        {
+                    //            this.SentenceList.Add(_cumle);
+                    //        }
+
+                    //    }
+                    //}
+
                 }
-                
+
             }
 
         }
 
         private bool KontrolCumle(string cumle)
-        {           
-           
+        {
+
             bool kSonuc = false;
             char sonKarater = cumle[cumle.Length - 1];
             string sonKarakterdenOnce = cumle[cumle.Length - 2].ToString();
             char ilkKarater = cumle[0];
             int output = 0;
-            var SayiVarmi = cumle.Any(Char.IsDigit);
+           // var SayiVarmi = cumle.Any(Char.IsDigit);
             var SembolVarmi = cumle.Any(Char.IsSymbol);
-          
-            if(cumle.Contains("Prof.") || cumle.Contains("prof."))
+            var cumleHarfler = cumle.ToCharArray();
+
+            if (cumle.Contains("Prof.") || cumle.Contains("prof."))
             {
                 return kSonuc;
             }
@@ -147,10 +153,10 @@ namespace TezLiLi.APIHelpers
             {
                 return kSonuc;
             }
-            if (SayiVarmi==true)
-            {
-                return kSonuc;
-            }
+            //if (SayiVarmi == true)
+            //{
+            //    return kSonuc;
+            //}
             if (Char.IsLetter(ilkKarater) == false)
             {
                 return kSonuc;
@@ -163,7 +169,7 @@ namespace TezLiLi.APIHelpers
             {
                 return kSonuc;
             }
-            if(cumle.Contains("\\")==true)
+            if (cumle.Contains("\\") == true)
             {
                 return kSonuc;
             }
@@ -235,27 +241,27 @@ namespace TezLiLi.APIHelpers
             {
                 return true;
             }
-        
+
         }
-        public void WriteResultFromParsing(string _content,string _ocontent,int i,int _cs)
+        public void WriteResultFromParsing(string _content, string _ocontent, int i, int _cs)
         {
-            
-            //RFilePath = ResultFilePathList[i];
-           
+
+            RFilePath = ResultFilePathList[i];
+
             using (StreamWriter sw = File.AppendText(RFilePath))
             {
                 System.Windows.Forms.RichTextBox rch = new System.Windows.Forms.RichTextBox();
-                rch.Text =_content;
+                rch.Text = _content;
                 foreach (string l in rch.Lines)
-                    sw.WriteLine(l);               
-                    sw.WriteLine("\n\n");
+                    sw.WriteLine(l);
+                sw.WriteLine("\n\n");
             }
 
-            var  OrjFilePath = OrjFilePathList[i];
-            using (StreamWriter sw = File.AppendText(this.SFilePath))
+            var OrjFilePath = OrjFilePathList[i];
+            using (StreamWriter sw = File.AppendText(OrjFilePath))
             {
                 System.Windows.Forms.RichTextBox rch = new System.Windows.Forms.RichTextBox();
-                rch.Text = _cs + " "+ _ocontent;
+                rch.Text = _cs + " " + _ocontent;
                 foreach (string l in rch.Lines)
                     sw.WriteLine(l);
                 sw.WriteLine("\n\n");

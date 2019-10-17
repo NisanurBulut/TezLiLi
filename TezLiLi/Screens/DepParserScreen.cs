@@ -36,21 +36,22 @@ namespace TezLiLi
         {
             TextParserHelper textParser = new TextParserHelper();
             int cs = 1;
-           
-           foreach(var topic in textParser.TopicList) {
+
+            prBarFileCount.Minimum = 0;
+            prBarFileCount.Value = 0;
+            foreach (var topic in textParser.TopicList) {
               
                 //continue;
                 textParser.InitializeTextParserHelper(topic);
                 //Konu içindeki dosya isimlerini alalımint
-
+               
                 textParser.GetTopicFiles(); //konuya dair tetx dosyaları belirlenir
-                if (textParser.TopicFileList.Any())
-                {
-                    PrFile = textParser.TopicFileList.Count/100;
-                }
-                
+                prBarFileCount.Maximum = textParser.TopicFileList.Count;
                 for (int i = 0; i < textParser.TopicFileList.Count; i++)
                 {
+                    PrFile = PrFile + 1 ;
+                    prBarFileCount.Value = PrFile;
+
                     prBarSentenceCount.Value = 0;
                     textParser.SentenceList.Clear();
                     var textFilePath = textParser.TopicFileList[i];
@@ -60,23 +61,23 @@ namespace TezLiLi
                     string pResult = string.Empty;
                     if (textParser.SentenceList.Any())
                     {
-                        PrSentence =  textParser.SentenceList.Count/100;
                         prBarSentenceCount.Maximum = textParser.SentenceList.Count;
                     }
-                    prBarFileCount.Value = prBarFileCount.Value + PrFile;
-                    foreach (var s in textParser.SentenceList)
+                   
+                    for (var s=0; s< textParser.SentenceList.Count; s++)
                     {
                       
                         try
                         {
-                            rTBOriginal_Text.Text = s + "\n\n";
+                            rTBOriginal_Text.Text = textParser.SentenceList[s] + "\n\n";
                             //var nresult = ApiMethodViaHelper.NormalizationCall(s);
-                            pResult = ApiMethodViaHelper.NoisyPipeline(s);
+                            pResult = ApiMethodViaHelper.NoisyPipeline(textParser.SentenceList[s]);
                             rTBDepParsingText.Text = pResult + "\n\n";
                             
-                            textParser.WriteResultFromParsing(pResult, s, i, cs);
+                            textParser.WriteResultFromParsing(pResult, textParser.SentenceList[s], i, cs);
                             cs = cs + 1;
-                            prBarSentenceCount.Value = prBarSentenceCount.Value + 1;
+                            prBarSentenceCount.Value = cs;
+                            textParser.SentenceList[s] = string.Empty;
                         }
                         catch (Exception ex)
                         {
